@@ -9,14 +9,14 @@ import numpy as np
 # 1. DATA PREPROCESSING
 # -------------------------
 
-# Transformations for training data
-train_transforms = transforms.Compose([
-    transforms.Resize((224, 224)),
-    transforms.RandomHorizontalFlip(),
-    transforms.RandomRotation(20),
-    transforms.ColorJitter(brightness=0.2),
-    transforms.ToTensor(),
-    transforms.Normalize([0.485, 0.456, 0.406],
+# Transformations for training data before we use the data
+train_transforms = transforms.Compose([ #compose puts all the transformations of the data in one object
+    transforms.Resize((224, 224)), #resizes our images to 224 by 224 because thats what resnet can use
+    transforms.RandomHorizontalFlip(), #changing the orientation of the data so that the model can understand changd data
+    transforms.RandomRotation(20),#changing the orientation of the data so that the model can understand changd data
+    transforms.ColorJitter(brightness=0.2), #changing the orientation of the data so that the model can understand changd data
+    transforms.ToTensor(), #makes the image into a tensor so the machine can understand it
+    transforms.Normalize([0.485, 0.456, 0.406], #normalizes data 
                          [0.229, 0.224, 0.225])
 ])
 
