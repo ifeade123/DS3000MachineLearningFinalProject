@@ -110,14 +110,22 @@ def uploadFunction(): #function that occurs to upload file
         matching_recipes = [dict(t) for t in {tuple(d.items()) for d in matching_recipes}]
         if matching_recipes:
             window=tk.Toplevel()
+            backgroundimagerecipes = tk.PhotoImage(file="RBg.png") #load in the background picture for the app
+            
             canvasNewWindow=tk.Canvas(window)
+            canvasNewWindow.pack(side="left",fill="both", expand=True)
+
+            canvasNewWindow.create_image(0,0, image=backgroundimagerecipes, anchor="nw") #anchor and place the image in the window
+            canvasNewWindow.bg_image=backgroundimagerecipes
+
             scrollbar=tk.Scrollbar(window, orient="vertical", command=canvasNewWindow.yview)
             canvasNewWindow.configure(yscrollcommand=scrollbar.set)
-            canvasNewWindow.pack(side="left",fill="both", expand=True)
             scrollbar.pack(side="right", fill="y")
-            scroll_frame=tk.Frame(canvasNewWindow)
-            canvasNewWindow.create_window((0,0), window=scroll_frame, anchor="nw")
-            title_label = tk.Label(scroll_frame, text="Matching Recipes Below:", font=("Times", 30, "bold"), fg="grey", bg="White", borderwidth=2, relief="ridge")
+            
+            scroll_frame=tk.Frame(canvasNewWindow, bg="white", bd=0)
+            canvasNewWindow.create_window((220,0), window=scroll_frame, anchor="nw")
+            
+            title_label = tk.Label(scroll_frame, text="Matching Recipes Below:", font=("Times", 30, "bold"), fg="grey", bg="White", borderwidth=2, relief="ridge",justify="center")
             title_label.pack(pady=5)
             recipe_text=""
             for recipe in matching_recipes:
@@ -132,18 +140,54 @@ def uploadFunction(): #function that occurs to upload file
                     scroll_frame,
                     text=block,
                     font=("Times", 16,),
-                    justify="left",
-                    wraplength=1500,
+                    justify="center",
+                    wraplength=1100,
                     anchor="w",
                     bg="white",
                     fg="grey"
                     
                 )
-                lbl.pack(pady=10, anchor="w")
+                lbl.pack(pady=10)
+            
+            
 
 
-            scroll_frame.update_idletasks()
-            canvasNewWindow.configure(scrollregion=canvasNewWindow.bbox("all"))
+            
+           # scroll_frame.update_idletasks()
+           # scroll_width2 = scroll_frame.winfo_reqwidth()
+           # scroll_height2 = scroll_frame.winfo_reqheight()
+           # canvasNewWindow.configure(scrollregion=(0, 0, scroll_width2, scroll_height2))
+
+         
+            
+            #canvasNewWindow.update_idletasks()
+
+           # bg_height = canvasNewWindow.bg_image.height()
+
+            # Tile background vertically only
+           # for y in range(0, scroll_height2, bg_height):
+               # canvasNewWindow.create_image(0, y, image=canvasNewWindow.bg_image, anchor="nw")
+
+
+            #canvasNewWindow.configure(scrollregion=(0, 0, canvasNewWindow.winfo_width(), scroll_height2))
+
+            #canvasNewWindow.configure(scrollregion=canvasNewWindow.bbox("all")) #IF WE GET AN ERROR ITS THIS
+            canvasNewWindow.update_idletasks()
+            scroll_height2 = scroll_frame.winfo_reqheight()
+            canvas_width = canvasNewWindow.winfo_width()
+            bg_height = canvasNewWindow.bg_image.height()
+
+            # tile only vertically, matching label content
+            y = 0
+            while y < scroll_height2:
+                canvasNewWindow.create_image(0, y, image=canvasNewWindow.bg_image, anchor="nw")
+                y += bg_height
+
+            # set scrollregion
+            canvasNewWindow.configure(scrollregion=(0, 0, canvas_width, scroll_height2))
+
+
+
         else:
             recipe_text = "No matching recipes found for your ingredients."
             text5 = canvas.create_text(800, 600, text=recipe_text, font="times 18", fill="grey", anchor="n", width=900)
