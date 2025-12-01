@@ -210,7 +210,7 @@ rect1=canvas.create_rectangle(backgroundBox1, fill='white', outline='grey')
 canvas.tag_lower(rect1,text1)
 
 #secondary message for app, prompting user to upload image and formatting
-text2=canvas.create_text(800, 200, text="What will we make today?\nPlease upload the food that you have! Align them against a solid background beside eachother.", font="times 20", fill="grey")
+text2=canvas.create_text(800, 200, text="What will we make today?\nPlease upload the food that you have(as .jpg)! Align them against a solid background beside eachother.", font="times 20", fill="grey")
 backgroundBox2=canvas.bbox(text2)
 rect2=canvas.create_rectangle(backgroundBox2, fill='white', outline='grey')
 canvas.tag_lower(rect2,text2)
