@@ -85,7 +85,7 @@ def uploadFunction(): #function that occurs to upload file
         sorted_preds = sorted(zip(pred_classes, pred_probs), key=lambda x: x[1], reverse=True)
 
         #print(f"Prediction index: {pred.item()}") #for testing only
-        text_output = "Foods Detected:\n" + "\n".join([f"{cls}:{prob}" for cls, prob in sorted_preds])
+        text_output = "Foods Detected:\n" + "\n".join([f"{cls}" for cls, prob in sorted_preds])
         text4 = canvas.create_text(800, 500, text=text_output, font="times 20", fill="grey")
         backgroundBox4=canvas.bbox(text4) #text sizing for box around text
         rect4=canvas.create_rectangle(backgroundBox4, fill='white', outline='grey') #creating rectangle for box around text
@@ -109,16 +109,41 @@ def uploadFunction(): #function that occurs to upload file
                 })
         matching_recipes = [dict(t) for t in {tuple(d.items()) for d in matching_recipes}]
         if matching_recipes:
-            secondary_window = tk.Toplevel()
-            secondary_window.title("Secondary Window")
-            secondary_window.config(width=300, height=200)
-            recipe_text = "Matching Recipes:\n"
+            window=tk.Toplevel()
+            canvasNewWindow=tk.Canvas(window)
+            scrollbar=tk.Scrollbar(window, orient="vertical", command=canvasNewWindow.yview)
+            canvasNewWindow.configure(yscrollcommand=scrollbar.set)
+            canvasNewWindow.pack(side="left",fill="both", expand=True)
+            scrollbar.pack(side="right", fill="y")
+            scroll_frame=tk.Frame(canvasNewWindow)
+            canvasNewWindow.create_window((0,0), window=scroll_frame, anchor="nw")
+            title_label = tk.Label(scroll_frame, text="Matching Recipes Below:", font=("Times", 30, "bold"), fg="grey", bg="White", borderwidth=2, relief="ridge")
+            title_label.pack(pady=5)
+            recipe_text=""
             for recipe in matching_recipes:
-                recipe_text += f"\n{recipe['Recipe']}\nIngredients: {recipe['Ingredients']}\nInstructions: {recipe['Instructions']}\n"
-                text5 = canvas.create_text(800, 200, text=recipe_text, font="times 18", fill="grey", anchor="n", width=900)
-                backgroundBox5 = canvas.bbox(text5)  # get the bounding box for rectangle
-                rect5 = canvas.create_rectangle(backgroundBox5, fill='white', outline='grey')
-                canvas.tag_lower(rect5, text5)
+                block = (
+                    f"======={recipe['Recipe']}=======\n"
+                    f"Ingredients:\n{recipe['Ingredients']}\n\n"
+                    f"Instructions:\n{recipe['Instructions']}\n"
+                    "----------------------------------------\n"
+                )
+
+                lbl = tk.Label(
+                    scroll_frame,
+                    text=block,
+                    font=("Times", 16,),
+                    justify="left",
+                    wraplength=1500,
+                    anchor="w",
+                    bg="white",
+                    fg="grey"
+                    
+                )
+                lbl.pack(pady=10, anchor="w")
+
+
+            scroll_frame.update_idletasks()
+            canvasNewWindow.configure(scrollregion=canvasNewWindow.bbox("all"))
         else:
             recipe_text = "No matching recipes found for your ingredients."
             text5 = canvas.create_text(800, 600, text=recipe_text, font="times 18", fill="grey", anchor="n", width=900)
