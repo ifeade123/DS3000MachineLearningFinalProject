@@ -9,7 +9,7 @@ The goal is to hopefully help people reduce food waste in the case that they do 
 **=<3=How To Use=<3=**
 
 Steps:
-1. Simply run the code, and the app window should pop up.
+1. Simply run the 'FinalMachineLearningSection.py'code, and the app window should pop up. (Warning, do not run the foodidentifiermodel.py, or else you will retrain the whole model, its up to you, but I wouldnt. 🤷🏾‍♀️)
 2. Upload a '.jpg' image to the app, and wait. The app will open a new window with retrieved recipes.
 3. Scroll, cook, and enjoy!
 
