@@ -4,12 +4,16 @@ Remake is a project made by 4 university students, tasked with using AI to solve
 Our Program Works to help people find recipes for food in their fridges quickly and easily when they upload a photo to the app in the code. 
 The goal is to hopefully help people reduce food waste in the case that they do not know what to cook with food in their fridges.
 
+
+
 **=<3=How To Use=<3=**
 
 Steps:
 1. Simply run the code, and the app window should pop up.
 2. Upload a '.jpg' image to the app, and wait. The app will open a new window with retrieved recipes.
 3. Scroll, cook, and enjoy!
+
+
 
 **=<3=About The Code=<3=**
 
