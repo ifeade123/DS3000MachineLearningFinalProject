@@ -91,7 +91,7 @@ def uploadFunction(): #function that occurs to upload file
         #print(f"Prediction index: {pred.item()}") #for testing only
 
         #++++++++++++++++++++++++++++Have model state what it detected++++++++++++++++++++++++++++++++++++++
-        text_output = "Foods Detected:\n" + "\n".join([f"{cls}" for cls, prob in sorted_preds]) #this is output that will go back to the user to tell them what the model found
+        text_output = "Foods Detected:\n" + "\n".join([f"{cls}: {100*prob:.2f}% Certainty" for cls, prob in sorted_preds]) #this is output that will go back to the user to tell them what the model found
         text4 = canvas.create_text(800, 500, text=text_output, font="times 20", fill="grey") #this is UI design to show the output of what the model found
         backgroundBox4=canvas.bbox(text4) #text sizing for box around text
         rect4=canvas.create_rectangle(backgroundBox4, fill='white', outline='grey') #creating rectangle for box around text
